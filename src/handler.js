@@ -22,7 +22,7 @@ function handler (request, response){
         });
     }
 
-    else if (endpoint === '/create-post'){
+    else if (endpoint === '/create/post'){
 
         var allTheData = '';
 
@@ -37,6 +37,19 @@ function handler (request, response){
             console.log(convertedData);
             response.end();
         });
+    }
+
+    else if (endpoint === '/posts'){
+        response.writeHead(200,{"data-type":"JSON"});
+
+        fs.readFile(__dirname + '/../src/posts.json', function(err, file){
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.end(file);
+        });
+
     }
 
     else {
