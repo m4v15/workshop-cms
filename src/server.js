@@ -27,4 +27,22 @@ function handler (request, response){
             response.end(file);
         })
     }
+    else {
+        var ext = endpoint.split('.')[1];
+        var extType = {
+            "ico": 'image/x-icon',
+            "css": 'text/css',
+            "js": 'text/javascript'
+        }
+
+        response.writeHead(200, {"content-type":extType[ext]});
+
+        fs.readFile(__dirname + '/../public' + endpoint, function(err, file){
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.end(file);
+        })    
+    }
 }
