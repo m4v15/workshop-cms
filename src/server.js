@@ -1,5 +1,6 @@
 var http = require('http');
 var fs = require('fs');
+var querystring = require('querystring');
 
 var server = http.createServer(handler);
 
@@ -25,8 +26,26 @@ function handler (request, response){
                 return;
             }
             response.end(file);
-        })
+        });
     }
+
+    else if (endpoint === '/create-post'){
+
+        var allTheData = '';
+
+        response.writeHead(301,{"Location":'/'});
+
+        request.on('data', function (someData) {
+
+            allTheData += someData;
+        });
+        request.on('end', function(){
+            var convertedData = querystring.parse(allTheData);
+            console.log(convertedData);
+            response.end();
+        });
+    }
+
     else {
         var ext = endpoint.split('.')[1];
         var extType = {
@@ -43,6 +62,7 @@ function handler (request, response){
                 return;
             }
             response.end(file);
-        })    
+        });
     }
+
 }
