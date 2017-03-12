@@ -1,4 +1,5 @@
 var http = require('http');
+var fs = require('fs');
 
 var server = http.createServer(handler);
 
@@ -9,7 +10,21 @@ server.listen(3000, function(){
 var message = "We are making servers!"
 
 function handler (request, response){
-    response.writeHead(200,{"content-type":"text/html"});
-    response.write(message);
-    response.end();
+    var endpoint = request.url;
+    var method = request.method;
+
+    if (endpoint ==='/'){
+
+        console.log(endpoint);
+
+        response.writeHead(200,{"content-type":"text/html"});
+
+        fs.readFile(__dirname + '/../public/index.html', function(err, file){
+            if (err) {
+                console.log(err);
+                return;
+            }
+            response.end(file);
+        })
+    }
 }
