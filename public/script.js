@@ -18,11 +18,11 @@ $(document).ready(function() {
                 postDiv.appendChild(thumbnail);
                 postDiv.appendChild(postText);
                 postContainer.appendChild(postDiv);
-                
+
             }
         },
         error: function(error){
-            console.log(error);
+            console.log('script.js error: ',error);
         }
     });
 });

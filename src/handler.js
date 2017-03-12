@@ -34,7 +34,28 @@ function handler (request, response){
         });
         request.on('end', function(){
             var convertedData = querystring.parse(allTheData);
-            console.log(convertedData);
+            var content = convertedData.post;
+            var timestamp = Date.now()
+            //
+            // var toAdd = {};
+            // toAdd[timestamp]=content;
+            // toAdd=JSON.stringify(toAdd);
+
+            fs.readFile(__dirname + '/../src/posts.json', function(err, file){
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                var oldFile = (JSON.parse(file));
+                oldFile[timestamp] = content;
+                newFile = JSON.stringify(oldFile);
+                fs.writeFile(__dirname + '/../src/posts.json', newFile, function(err){
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                });
+            });
             response.end();
         });
     }
