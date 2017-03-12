@@ -1,16 +1,9 @@
-var http = require('http');
 var fs = require('fs');
 var querystring = require('querystring');
 
-var server = http.createServer(handler);
-
-server.listen(3000, function(){
-    console.log("Server listening on port 3000. Ready to accept requests!");
-})
-
-var message = "We are making servers!"
-
 function handler (request, response){
+
+
     var endpoint = request.url;
     var method = request.method;
 
@@ -66,3 +59,5 @@ function handler (request, response){
     }
 
 }
+
+module.exports = handler;
